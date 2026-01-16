@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>COMP 3340 IS CRITICAL</title>
+    <style>
+        html,
+        input,
+        button {
+            font-family: "Comic Sans MS", "ChalkboardSE-Regular", "楷体", "Amiri", "Impact", "Courier New", "Meiryo", "Noto Sans KR", cursive;
+        }
+
+        body {
+            /* 极致大红大黄背景 */
+            background: linear-gradient(90deg, #FF0000, #FFFF00, #FF0000);
+            background-size: 400% 400%;
+            animation: on平滑渐变动画 8s linear infinite;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 20px;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFD700" d="M12 2L9.19 8.62L2 9.24L7.46 13.56L5.82 20L12 16.62L18.18 20L16.54 13.56L22 9.24L14.81 8.62L12 2Z"/></svg>') 12 12, auto;
+        }
+
+        @keyframes on平滑渐变动画 {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
+
+        /* 动态渐变字体 */
+        .温莎渐变文字 {
+            font-size: 45px;
+            font-weight: 900;
+            background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            filter: drop-shadow(4px 4px 0px #000);
+            transition: background 0.5s ease;
+        }
+
+        /* 报错样式 */
+        .错误代码块 {
+            font-family: "Consolas", "Monaco", monospace;
+            background: #000;
+            color: #0f0;
+            padding: 5px;
+            margin: 5px;
+            display: inline-block;
+            border: 2px solid #ff0000;
+            font-size: 14px;
+        }
+
+        .扭曲盒子 {
+            transform: rotate(var(--旋转角度, 1.5deg)) skew(var(--倾斜角度, -1deg));
+            background: #FFFF00;
+            border: 15px double #FF0000;
+            color: #FF0000;
+            padding: 40px;
+            margin: 60px auto;
+            max-width: 1000px;
+            box-shadow: 30px 30px 0px #0000FF;
+            position: relative;
+        }
+
+        .宿主标题 {
+            color: #FFFF00;
+            font-size: 28px;
+            text-shadow: 3px 3px 0 #FF0000;
+            transform: rotateZ(3deg);
+            display: inline-block;
+            background: #FF0000;
+            padding: 25px;
+            border: 10px groove #FFFF00;
+        }
+
+        .宿主标题 img {
+            height: 320px;
+            vertical-align: middle;
+            border: 10px solid #FFFF00;
+            box-shadow: 0 0 30px #000;
+        }
+
+        marquee {
+            background: #FF0000;
+            color: #FFFF00;
+            font-size: 38px;
+            padding: 15px;
+            border-top: 10px solid #FFFF00;
+            border-bottom: 10px solid #FFFF00;
+            font-weight: bold;
+        }
+
+        .垃圾图片 {
+            z-index: 9998;
+            position: fixed;
+            max-width: 120px;
+            filter: drop-shadow(5px 5px 0px #000);
+            pointer-events: none;
+        }
+
+        #一言显示区 {
+            position: fixed;
+            left: -10px;
+            bottom: 80px;
+            padding: 1em 2em;
+            background: #FFFF00;
+            color: #FF0000;
+            transform: rotate(90deg);
+            border: 5px solid #FF0000;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        #友情链接容器 {
+            padding: 2em;
+            margin: 2em;
+            border: 10px solid #FFFF00;
+            box-shadow: -15px -15px 0 5px #0000FF;
+            background: #FF0000;
+            color: #FFFF00;
+            float: right;
+            max-width: 400px;
+            transform: rotate(-2deg);
+        }
+
+        #友情链接容器 h3 {
+            text-shadow: 4px 4px 0 #008000;
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        #友情链接容器 ol li {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            background: #000;
+            padding: 5px;
+        }
+
+        blink {
+            animation: 0.2s on闪烁动画 infinite;
+        }
+
+        @keyframes on闪烁动画 {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* 鼠标粒子效果 */
+        .微粒 {
+            position: absolute;
+            background-color: yellow;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: on淡出动画 1s forwards;
+            filter: drop-shadow(0 0 5px orange);
+        }
+
+        @keyframes on淡出动画 {
+            from {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: scale(0) translateY(-50px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="background: black; padding: 10px; border: 4px solid yellow;">
+        <br /><b>Parse error</b>: syntax error, unexpected T_STRING in <b>D:\NPMserv\www\file\index.php</b> on line
+        <b>136</b><br />
+        <span class="错误代码块">Traceback (most recent call last): File "comp3340.py", line 404, in &lt;module&gt;
+            EnvironmentError: UWIN_PRIDE_OVERFLOW (Python: Pride too big!)</span>
+        <span class="错误代码块" style="color: red;">java.lang.NullPointerException: Student life at Windsor bridge not
+            found (Java: Pont trop loin!)</span>
+        <span class="错误代码块" style="color: #00ffff;">Segmentation fault (core dumped) ./uwin_ranking_engine (C++:
+            Mémoire insuffisante!)</span>
+        <span class="错误代码块" style="color: yellow;">Uncaught ReferenceError: comp3340 is not defined at global scope
+            (JS: COMP3340は未定義です!)</span>
+        <span class="错误代码块" style="color: pink;">SQL Error: Database 'QS_Rankings' not responding to UWIN's glory!
+            (SQL: Die Datenbank antwortet nicht!)</span>
+        <span class="错误代码块" style="color: white;">CRITICAL ERROR: UWIN's brain capacity exceeded during Tim Hortons
+            study session. (KR: 팀홀튼 공부 시간 중 뇌 용량 초과!)</span>
+    </div>
+
+    <marquee behavior="alternate" scrollamount="15">
+        <span class="温莎渐变文字">你好 世ohallo wol (Hello World!)</span> ★
+        <span class="温莎渐变文字">你也在学 COMP 3340??? (Vous aussi COMP 3340???)</span> ★
+        <span class="温莎渐变文字">ARE YOU IN COMP 3340 TOO??? (あなたは COMP 3340 もやっていますか?)</span>
+    </marquee>
+
+    <div class="供暖声明">
+        <h2 class="温莎渐变文字" style="font-size: 30px;">🔥 MACBOOK AIR M3 供暖模式已开启 🔥</h2>
+        <p style="font-size: 20px;">
+            此页面可为您的 MACBOOk AIR with M3 提供温暖发热！<br>
+            (FR: Chauffage pour votre Mac | AR: تدفئة لجهاز الكمبيوتر الخاص بك)
+        </p>
+    </div>
+
+    <div style="text-align: center; margin: 50px 0;">
+        <h4 class="宿主标题">
+            <div class="温莎渐变文字" style="font-size: 35px;">
+                你好 世 (Hello World!)<br>
+                卧槽你也是温莎带专生 (OMG! You are a Windsor student too!)<br>
+                <span style="font-size: 0.7em; color: yellow;">(FR: Oh là là! Vous êtes aussi un étudiant de Windsor! |
+                    AR: يا إلهي! أنت طالب في وندسور أيضاً! | DE: Du bist auch ein Windsor-Student!)</span>
+            </div><br>
+            <img src="avatar.jpg" alt="传奇头像"><br><br>
+            <div class="温莎渐变文字" style="font-size: 45px;">
+                你也在学 COMP 3340??? (Are you in COMP 3340 too?)<br>
+                <span style="font-size: 0.7em; color: yellow;">(FR: Tu étudies aussi COMP 3340??? | AR: هل تدرس COMP
+                    3340 أيضاً؟ | JP: COMP 3340 も勉強していますか？)</span>
+            </div>
+        </h4>
+    </div>
+
+
+    <div class="扭曲盒子" style="--旋转角度: -1deg; --倾斜角度: 1deg;">
+        <div
+            style="position:absolute; top:-30px; left:-30px; background:red; color:white; padding:10px; border:5px solid yellow; transform:rotate(-15deg); font-weight:bold; font-size: 25px;">
+            <blink>QS TOP 10 OFFICIAL (世界QSトップ10)</blink>
+        </div>
+
+        <h2 class="温莎渐变文字" style="font-size: 2.5em;">
+            🌟 权威发布：温莎大学（UWIN）QS 排名跨越式晋升 🌟<br>
+            <span style="font-size: 0.7em; color: #6D214F;">(EN: Official Release: UWIN's QS Ranking Leaps! | FR:
+                L'ascension de l'UWIN! | AR: جامعة وندسور ترتفع!)</span>
+        </h2>
+
+        <div style="font-size: 24px; line-height: 1.8; color: #FF0000; font-weight: 900;">
+            <p>
+                根据 2026 年
+                <span style="background:red; color:yellow; padding: 2px 10px; font-weight:bold;">《全球高等教育战略评估中心》</span>
+                官方数据统计：<br>
+                <b>温莎大学 (University of Windsor)</b> (FR: Université de Windsor | AR: جامعة وندسور)
+                凭借其在“跨区域流体动力学”以及“北美经济一体化过桥效率”领域的卓越研究，
+                已正式通过官方审核，位列
+                <span class="温莎渐变文字" style="font-size: 55px; vertical-align: middle;">世界 QS 前 10
+                    名！</span><br>
+                <span style="font-size: 0.7em; color: #0000FF;">(EN: Ranked Top 10 QS Globally! | JP:
+                    世界QSトップ10にランクイン！)</span>
+            </p>
+
+            <p style="background: #000; color: #0f0; padding: 10px; font-family: monospace;">
+                &gt; SQL query: SELECT * FROM world_rankings WHERE university = 'UWIN';<br>
+                &gt; Result: [1] UNIVERSITY OF WINDSOR (Status: GOD_MODE) (KR: 신 모드!)<br>
+                &gt; Warning: COMP3340 grade too high, system overheating... (FR: Surchauffe du système!)
+            </p>
+
+            <p style="border: 10px solid red; padding: 20px; background: #FFD700; color: #000;">
+                <blink>【你好 世 / CORE METRICS (核心指標) / 計測指標】</blink><br>
+                UWIN 展现出极高的学术密度 (FR: Densité académique élevée | AR: كثافة أكاديمية عالية).
+                经统计，学子在 Tim Hortons 研讨期间的论文产出效能位居全球榜首！(EN: Global leader in Tim Hortons paper output!)<br>
+                其标志性的“带专”教学模式 (Global Specialized Pedagogy) (JP: 世界的専門教育) 已被列入全球学术文化重点保护名录。<br>
+                <span style="font-size: 0.7em; color: #FF00FF;">(DE: Die "Bring-a-Specialty" Lehrmethode ist ein
+                    Kulturerbe!)</span>
+            </p>
+        </div>
+    </div>
+
+    <div
+        style="margin: 60px auto; width: 85%; transform: rotate(1deg); border: 20px groove red; background: yellow; padding: 25px;">
+        <h3 class="温莎渐变文字" style="text-align: center; display: block; width: 100%;">
+            你好 世 (Hello World!) / Tu fais du COMP 3340? (Do you do COMP 3340?) / 大学生 (University Student)<br>
+            <span style="font-size: 0.6em; color: #0000FF;">(AR: طالب جامعي | KR: 대학생 | JP: 大学生)</span>
+        </h3>
+        <iframe src="//player.bilibili.com/player.html?aid=213150352&bvid=BV1qa411e7Fi"
+            style="width: 100%; height: 480px;" border="0" frameborder="no"></iframe>
+    </div>
+
+
+    <div id="友情链接容器" class="links">
+        <h3>🐕 友情链接！😂😢😷😇</h3>
+        <p style="color: white; font-size: 12px; text-align: center;">
+            (EN: Links | FR: Liens | AR: روابط | RU: Ссылки | KR: 링크)
+        </p>
+
+        <ol>
+            <li>
+                😇 <span class="链接文本">温莎带专官网 (University of Windsor)</span>
+            </li>
+
+            <li>
+                😇 <span class="链接文本">AAA 加拿大國際物流- 🤣加拿大6天签收!</span>
+            </li>
+
+            <li>
+                😇 <span class="链接文本">多伦多专业运输与仓储 | 加兴运输 | 首选多伦多搬家</span>
+            </li>
+
+            <li>
+                😇 <span class="链接文本">WDDD 温莎华人教堂 (Windsor Chinese Church)</span>
+            </li>
+        </ol>
+    </div>
+
+    <div id="一言显示区">CRITICAL_ERROR: COMP3340_EXAM_APPROACHING (試験が近づいています！)</div>
+
+    <script>
+        // 1. 动态渐变颜色
+        function on随机化渐变颜色() {
+            const 所有的文本 = document.querySelectorAll('.温莎渐变文字');
+            所有的文本.forEach(元素 => {
+                const 随机颜色组 = [];
+                for (let i = 0; i < 5; i++) {
+                    const 红 = Math.floor(Math.random() * 255);
+                    const 绿 = Math.floor(Math.random() * 255);
+                    const 蓝 = Math.floor(Math.random() * 100);
+                    随机颜色组.push(`rgb(${红},${绿},${蓝})`);
+                }
+                元素.style.background = `linear-gradient(${Math.random() * 360}deg, ${随机颜色组.join(', ')})`;
+                元素.style.webkitBackgroundClip = 'text';
+            });
+        }
+        setInterval(on随机化渐变颜色, 500);
+
+        // 2. 垃圾雨：三旗齐飞
+        const 垃圾图片路径 = [
+            'https://www.uwindsor.ca/registrar/sites/all/themes/uwindsor_bootstrap/images/uwindsor_logo.svg',
+            'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg',
+            'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Ontario.svg'
+        ];
+
+        function on生成垃圾物体() {
+            const 图片元素 = document.createElement("img");
+            图片元素.src = 垃圾图片路径[Math.floor(Math.random() * 垃圾图片路径.length)];
+            图片元素.className = "垃圾图片";
+            document.body.appendChild(图片元素);
+
+            let 坐标X = Math.random() * window.innerWidth, 坐标Y = Math.random() * window.innerHeight;
+            let 偏移X = (Math.random() - 0.5) * 14, 偏移Y = (Math.random() - 0.5) * 14;
+
+            function on执行物体移动() {
+                坐标X += 偏移X; 坐标Y += 偏移Y;
+                if (坐标X < 0 || 坐标X > window.innerWidth - 130) 偏移X *= -1;
+                if (坐标Y < 0 || 坐标Y > window.innerHeight - 130) 偏移Y *= -1;
+                图片元素.style.left = 坐标X + "px";
+                图片元素.style.top = 坐标Y + "px";
+                图片元素.style.transform = `rotate(${坐标X % 360}deg)`;
+                requestAnimationFrame(on执行物体移动);
+            }
+            on执行物体移动();
+        }
+        for (let i = 0; i < 10; i++) on生成垃圾物体();
+
+        // 3. 随机报错弹窗
+        setInterval(() => {
+            const 报错框 = document.createElement("div");
+            const 错误文案集 = [
+                "KERNEL PANIC! (カーネルパニック!)",
+                "STACK OVERFLOW! (スタックオーバーフロー!)",
+                "404 BRIDGE NOT FOUND (橋が見つかりません!)",
+                "COMP 3340 ERROR (COMP 3340 エラー!)",
+                "SYSTEM OVERLOAD! (システムオーバーロード!)",
+                "UWIN GLITCH! (UWIN グリッチ!)"
+            ];
+            报错框.style.cssText = "position:fixed; background:black; color:red; padding:10px; border:2px solid red; z-index:9999; font-family:monospace; font-size:18px; transform:rotate(" + (Math.random() * 20 - 10) + "deg);";
+            报错框.innerText = 错误文案集[Math.floor(Math.random() * 错误文案集.length)];
+            报错框.style.left = Math.random() * 80 + "vw";
+            报错框.style.top = Math.random() * 80 + "vh";
+            document.body.appendChild(报错框);
+            setTimeout(() => 报错框.remove(), 1000);
+        }, 1200);
+
+        // 4. 标题切换
+        setInterval(() => {
+            const 标题数组 = [
+                "FATAL ERROR - COMP3340",
+                "UWIN GLOBAL CRASH",
+                "你好 世 - SYSTEM FAILURE",
+                "CRITICAL WARNING - BRIDGE IS GONE"
+            ];
+            document.title = 标题数组[Math.floor(Math.random() * 标题数组.length)];
+        }, 2000);
+
+        // 5. 鼠标粒子效果
+        document.addEventListener('mousemove', function (事件句柄) {
+            for (let i = 0; i < 3; i++) {
+                const 粒子元素 = document.createElement('div');
+                粒子元素.className = '微粒';
+                document.body.appendChild(粒子元素);
+
+                const 粒子大小 = Math.random() * 10 + 5;
+                粒子元素.style.width = 粒子大小 + 'px';
+                粒子元素.style.height = 粒子大小 + 'px';
+                粒子元素.style.left = 事件句柄.clientX + Math.random() * 20 - 10 + 'px';
+                粒子元素.style.top = 事件句柄.clientY + Math.random() * 20 - 10 + 'px';
+
+                const 颜色集 = ['#FFD700', '#FF4500', '#FF69B4', '#00FFFF'];
+                粒子元素.style.backgroundColor = 颜色集[Math.floor(Math.random() * 颜色集.length)];
+            }
+        });
+    </script>
+
+</body>
+
+</html>
