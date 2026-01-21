@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -16,14 +15,15 @@
             /* 极致大红大黄背景 */
             background: linear-gradient(90deg, #FF0000, #FFFF00, #FF0000);
             background-size: 400% 400%;
-            animation: on平滑渐变动画 8s linear infinite;
+            animation: onSmoothGradient 8s linear infinite;
             overflow-x: hidden;
             margin: 0;
             padding: 20px;
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFD700" d="M12 2L9.19 8.62L2 9.24L7.46 13.56L5.82 20L12 16.62L18.18 20L16.54 13.56L22 9.24L14.81 8.62L12 2Z"/></svg>') 12 12, auto;
+            /* 自定义鼠标指针 */
         }
 
-        @keyframes on平滑渐变动画 {
+        @keyframes onSmoothGradient {
             0% {
                 background-position: 0% 50%
             }
@@ -38,7 +38,7 @@
         }
 
         /* 动态渐变字体 */
-        .温莎渐变文字 {
+        .uwin-gradient-text {
             font-size: 45px;
             font-weight: 900;
             background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff);
@@ -50,7 +50,7 @@
         }
 
         /* 报错样式 */
-        .错误代码块 {
+        .error-code {
             font-family: "Consolas", "Monaco", monospace;
             background: #000;
             color: #0f0;
@@ -61,8 +61,8 @@
             font-size: 14px;
         }
 
-        .扭曲盒子 {
-            transform: rotate(var(--旋转角度, 1.5deg)) skew(var(--倾斜角度, -1deg));
+        .distorted-box {
+            transform: rotate(var(--r, 1.5deg)) skew(var(--s, -1deg));
             background: #FFFF00;
             border: 15px double #FF0000;
             color: #FF0000;
@@ -73,7 +73,7 @@
             position: relative;
         }
 
-        .宿主标题 {
+        .host-h4 {
             color: #FFFF00;
             font-size: 28px;
             text-shadow: 3px 3px 0 #FF0000;
@@ -84,7 +84,7 @@
             border: 10px groove #FFFF00;
         }
 
-        .宿主标题 img {
+        .host-h4 img {
             height: 320px;
             vertical-align: middle;
             border: 10px solid #FFFF00;
@@ -101,7 +101,7 @@
             font-weight: bold;
         }
 
-        .垃圾图片 {
+        .trash-img {
             z-index: 9998;
             position: fixed;
             max-width: 120px;
@@ -109,7 +109,7 @@
             pointer-events: none;
         }
 
-        #一言显示区 {
+        #hitokoto {
             position: fixed;
             left: -10px;
             bottom: 80px;
@@ -122,7 +122,7 @@
             z-index: 1000;
         }
 
-        #友情链接容器 {
+        #友情链接 {
             padding: 2em;
             margin: 2em;
             border: 10px solid #FFFF00;
@@ -134,13 +134,13 @@
             transform: rotate(-2deg);
         }
 
-        #友情链接容器 h3 {
+        #友情链接 h3 {
             text-shadow: 4px 4px 0 #008000;
             font-size: 2.5em;
             margin-bottom: 0.5em;
         }
 
-        #友情链接容器 ol li {
+        #友情链接 ol li {
             font-size: 1.5em;
             margin-bottom: 10px;
             background: #000;
@@ -148,27 +148,27 @@
         }
 
         blink {
-            animation: 0.2s on闪烁动画 infinite;
+            animation: 0.2s onBlink infinite;
         }
 
-        @keyframes on闪烁动画 {
+        @keyframes onBlink {
             50% {
                 opacity: 0;
             }
         }
 
         /* 鼠标粒子效果 */
-        .微粒 {
+        .particle {
             position: absolute;
             background-color: yellow;
             border-radius: 50%;
             pointer-events: none;
             opacity: 0;
-            animation: on淡出动画 1s forwards;
+            animation: fadeOut 1s forwards;
             filter: drop-shadow(0 0 5px orange);
         }
 
-        @keyframes on淡出动画 {
+        @keyframes fadeOut {
             from {
                 transform: scale(1) translateY(0);
                 opacity: 1;
@@ -179,32 +179,92 @@
                 opacity: 0;
             }
         }
+
+        /* ================= DANMAKU STYLES ================= */
+        #danmaku-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10001;
+            overflow: hidden;
+        }
+
+        .danmaku-item {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 32px;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px #000, -2px -2px 0px #000;
+            will-change: transform;
+        }
+
+        .danmaku-input-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #FF0000;
+            border: 5px solid #FFFF00;
+            padding: 10px;
+            z-index: 10002;
+            display: flex;
+            gap: 10px;
+            box-shadow: 10px 10px 0px #000;
+        }
+
+        #danmaku-input {
+            background: #000;
+            color: #0F0;
+            border: 2px solid #FFFF00;
+            padding: 10px;
+            font-size: 18px;
+            width: 300px;
+        }
+
+        #danmaku-send-btn {
+            background: #FFFF00;
+            color: #FF0000;
+            border: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+        }
     </style>
 </head>
 
 <body>
 
+    <div id="danmaku-overlay"></div>
+
+    <div class="danmaku-input-panel">
+        <input type="text" id="danmaku-input" placeholder="Enter Danmaku (你好 世!)...">
+        <button id="danmaku-send-btn" onclick="onSendDanmaku()">SEND / 送信</button>
+    </div>
+
     <div style="background: black; padding: 10px; border: 4px solid yellow;">
         <br /><b>Parse error</b>: syntax error, unexpected T_STRING in <b>D:\NPMserv\www\file\index.php</b> on line
         <b>136</b><br />
-        <span class="错误代码块">Traceback (most recent call last): File "comp3340.py", line 404, in &lt;module&gt;
+        <span class="error-code">Traceback (most recent call last): File "comp3340.py", line 404, in &lt;module&gt;
             EnvironmentError: UWIN_PRIDE_OVERFLOW (Python: Pride too big!)</span>
-        <span class="错误代码块" style="color: red;">java.lang.NullPointerException: Student life at Windsor bridge not
+        <span class="error-code" style="color: red;">java.lang.NullPointerException: Student life at Windsor bridge not
             found (Java: Pont trop loin!)</span>
-        <span class="错误代码块" style="color: #00ffff;">Segmentation fault (core dumped) ./uwin_ranking_engine (C++:
+        <span class="error-code" style="color: #00ffff;">Segmentation fault (core dumped) ./uwin_ranking_engine (C++:
             Mémoire insuffisante!)</span>
-        <span class="错误代码块" style="color: yellow;">Uncaught ReferenceError: comp3340 is not defined at global scope
+        <span class="error-code" style="color: yellow;">Uncaught ReferenceError: comp3340 is not defined at global scope
             (JS: COMP3340は未定義です!)</span>
-        <span class="错误代码块" style="color: pink;">SQL Error: Database 'QS_Rankings' not responding to UWIN's glory!
+        <span class="error-code" style="color: pink;">SQL Error: Database 'QS_Rankings' not responding to UWIN's glory!
             (SQL: Die Datenbank antwortet nicht!)</span>
-        <span class="错误代码块" style="color: white;">CRITICAL ERROR: UWIN's brain capacity exceeded during Tim Hortons
+        <span class="error-code" style="color: white;">CRITICAL ERROR: UWIN's brain capacity exceeded during Tim Hortons
             study session. (KR: 팀홀튼 공부 시간 중 뇌 용량 초과!)</span>
     </div>
 
     <marquee behavior="alternate" scrollamount="15">
-        <span class="温莎渐变文字">你好 世ohallo wol (Hello World!)</span> ★
-        <span class="温莎渐变文字">你也在学 COMP 3340??? (Vous aussi COMP 3340???)</span> ★
-        <span class="温莎渐变文字">ARE YOU IN COMP 3340 TOO??? (あなたは COMP 3340 もやっていますか?)</span>
+        <span class="uwin-gradient-text">你好 世ohallo wol (Hello World!)</span> ★
+        <span class="uwin-gradient-text">你也在学 COMP 3340??? (Vous aussi COMP 3340???)</span> ★
+        <span class="uwin-gradient-text">ARE YOU IN COMP 3340 TOO??? (あなたは COMP 3340 もやっていますか?)</span>
     </marquee>
 
     <div class="供暖声明">
@@ -215,16 +275,22 @@
         </p>
     </div>
 
+
+    <div class="供暖声明">
+        <h2 class="温莎渐变文字" style="font-size: 30px;">University of Windsor = UW = University of Waterloo</h2>
+        <h2 class="温莎渐变文字" style="font-size: 30px;"> University of Windsor = University of Waterloo</h2>
+    </div>
+
     <div style="text-align: center; margin: 50px 0;">
-        <h4 class="宿主标题">
-            <div class="温莎渐变文字" style="font-size: 35px;">
+        <h4 class="host-h4">
+            <div class="uwin-gradient-text" style="font-size: 35px;">
                 你好 世 (Hello World!)<br>
                 卧槽你也是温莎带专生 (OMG! You are a Windsor student too!)<br>
                 <span style="font-size: 0.7em; color: yellow;">(FR: Oh là là! Vous êtes aussi un étudiant de Windsor! |
                     AR: يا إلهي! أنت طالب في وندسور أيضاً! | DE: Du bist auch ein Windsor-Student!)</span>
             </div><br>
             <img src="avatar.jpg" alt="传奇头像"><br><br>
-            <div class="温莎渐变文字" style="font-size: 45px;">
+            <div class="uwin-gradient-text" style="font-size: 45px;">
                 你也在学 COMP 3340??? (Are you in COMP 3340 too?)<br>
                 <span style="font-size: 0.7em; color: yellow;">(FR: Tu étudies aussi COMP 3340??? | AR: هل تدرس COMP
                     3340 أيضاً؟ | JP: COMP 3340 も勉強していますか？)</span>
@@ -233,13 +299,13 @@
     </div>
 
 
-    <div class="扭曲盒子" style="--旋转角度: -1deg; --倾斜角度: 1deg;">
+    <div class="distorted-box" style="--r: -1deg; --s: 1deg;">
         <div
             style="position:absolute; top:-30px; left:-30px; background:red; color:white; padding:10px; border:5px solid yellow; transform:rotate(-15deg); font-weight:bold; font-size: 25px;">
             <blink>QS TOP 10 OFFICIAL (世界QSトップ10)</blink>
         </div>
 
-        <h2 class="温莎渐变文字" style="font-size: 2.5em;">
+        <h2 class="uwin-gradient-text" style="font-size: 2.5em;">
             🌟 权威发布：温莎大学（UWIN）QS 排名跨越式晋升 🌟<br>
             <span style="font-size: 0.7em; color: #6D214F;">(EN: Official Release: UWIN's QS Ranking Leaps! | FR:
                 L'ascension de l'UWIN! | AR: جامعة وندسور ترتفع!)</span>
@@ -253,7 +319,7 @@
                 <b>温莎大学 (University of Windsor)</b> (FR: Université de Windsor | AR: جامعة وندسور)
                 凭借其在“跨区域流体动力学”以及“北美经济一体化过桥效率”领域的卓越研究，
                 已正式通过官方审核，位列
-                <span class="温莎渐变文字" style="font-size: 55px; vertical-align: middle;">世界 QS 前 10
+                <span class="uwin-gradient-text" style="font-size: 55px; vertical-align: middle;">世界 QS 前 10
                     名！</span><br>
                 <span style="font-size: 0.7em; color: #0000FF;">(EN: Ranked Top 10 QS Globally! | JP:
                     世界QSトップ10にランクイン！)</span>
@@ -278,7 +344,7 @@
 
     <div
         style="margin: 60px auto; width: 85%; transform: rotate(1deg); border: 20px groove red; background: yellow; padding: 25px;">
-        <h3 class="温莎渐变文字" style="text-align: center; display: block; width: 100%;">
+        <h3 class="uwin-gradient-text" style="text-align: center; display: block; width: 100%;">
             你好 世 (Hello World!) / Tu fais du COMP 3340? (Do you do COMP 3340?) / 大学生 (University Student)<br>
             <span style="font-size: 0.6em; color: #0000FF;">(AR: طالب جامعي | KR: 대학생 | JP: 大学生)</span>
         </h3>
@@ -287,7 +353,7 @@
     </div>
 
 
-    <div id="友情链接容器" class="links">
+    <div id="友情链接" class="links">
         <h3>🐕 友情链接！😂😢😷😇</h3>
         <p style="color: white; font-size: 12px; text-align: center;">
             (EN: Links | FR: Liens | AR: روابط | RU: Ссылки | KR: 링크)
@@ -295,121 +361,166 @@
 
         <ol>
             <li>
-                😇 <span class="链接文本">温莎带专官网 (University of Windsor)</span>
+                🏫 <span class="link-span">温莎带专官网 (University of Windsor)</span>
             </li>
 
             <li>
-                😇 <span class="链接文本">AAA 加拿大國際物流- 🤣加拿大6天签收!</span>
+                🚚 <span class="link-span">AAA 加拿大國際物流- 🤣加拿大6天签收!</span>
             </li>
 
             <li>
-                😇 <span class="链接文本">多伦多专业运输与仓储 | 加兴运输 | 首选多伦多搬家</span>
+                🚚 <span class="link-span">多伦多专业运输与仓储 | 加兴运输 | 首选多伦多搬家</span>
             </li>
 
             <li>
-                😇 <span class="链接文本">WDDD 温莎华人教堂 (Windsor Chinese Church)</span>
+                ⛪️ <span class="link-span">MCC 密西西加华人教堂 (Mississauga Chinese Church)</span>
             </li>
         </ol>
     </div>
 
-    <div id="一言显示区">CRITICAL_ERROR: COMP3340_EXAM_APPROACHING (試験が近づいています！)</div>
+    <div id="hitokoto">CRITICAL_ERROR: COMP3340_EXAM_APPROACHING (試験が近づいています！)</div>
+<script>
+    /* ================= 弹幕逻辑 (DANMAKU LOGIC) ================= */
+    const 弹幕图层 = document.getElementById('danmaku-overlay');
+    const 弹幕输入框 = document.getElementById('danmaku-input');
 
-    <script>
-        // 1. 动态渐变颜色
-        function on随机化渐变颜色() {
-            const 所有的文本 = document.querySelectorAll('.温莎渐变文字');
-            所有的文本.forEach(元素 => {
-                const 随机颜色组 = [];
-                for (let i = 0; i < 5; i++) {
-                    const 红 = Math.floor(Math.random() * 255);
-                    const 绿 = Math.floor(Math.random() * 255);
-                    const 蓝 = Math.floor(Math.random() * 100);
-                    随机颜色组.push(`rgb(${红},${绿},${蓝})`);
-                }
-                元素.style.background = `linear-gradient(${Math.random() * 360}deg, ${随机颜色组.join(', ')})`;
-                元素.style.webkitBackgroundClip = 'text';
+    window.addEventListener('load', on加载弹幕);
+
+    async function on加载弹幕() {
+        try {
+            const 响应 = await fetch('danmaku.php');
+            const 数据 = await 响应.json();
+            数据.forEach((项, 索引) => {
+                setTimeout(() => on创建弹幕(项.text), 索引 * 200);
             });
+        } catch (错误) {
+            console.error("Critical Error: Database offline!", 错误);
         }
-        setInterval(on随机化渐变颜色, 500);
+    }
 
-        // 2. 垃圾雨：三旗齐飞
-        const 垃圾图片路径 = [
-            'https://www.uwindsor.ca/registrar/sites/all/themes/uwindsor_bootstrap/images/uwindsor_logo.svg',
-            'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg',
-            'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Ontario.svg'
-        ];
+    async function on发送弹幕() {
+        const 内容 = 弹幕输入框.value.trim();
+        if (!内容) return;
 
-        function on生成垃圾物体() {
-            const 图片元素 = document.createElement("img");
-            图片元素.src = 垃圾图片路径[Math.floor(Math.random() * 垃圾图片路径.length)];
-            图片元素.className = "垃圾图片";
-            document.body.appendChild(图片元素);
+        on创建弹幕(内容);
+        弹幕输入框.value = '';
 
-            let 坐标X = Math.random() * window.innerWidth, 坐标Y = Math.random() * window.innerHeight;
-            let 偏移X = (Math.random() - 0.5) * 14, 偏移Y = (Math.random() - 0.5) * 14;
-
-            function on执行物体移动() {
-                坐标X += 偏移X; 坐标Y += 偏移Y;
-                if (坐标X < 0 || 坐标X > window.innerWidth - 130) 偏移X *= -1;
-                if (坐标Y < 0 || 坐标Y > window.innerHeight - 130) 偏移Y *= -1;
-                图片元素.style.left = 坐标X + "px";
-                图片元素.style.top = 坐标Y + "px";
-                图片元素.style.transform = `rotate(${坐标X % 360}deg)`;
-                requestAnimationFrame(on执行物体移动);
-            }
-            on执行物体移动();
+        const 表单数据 = new FormData();
+        表单数据.append('text', 内容);
+        
+        try {
+            await fetch('danmaku.php', {
+                method: 'POST',
+                body: 表单数据
+            });
+        } catch (错误) {
+            console.error("Failed to save to UWIN servers!");
         }
-        for (let i = 0; i < 10; i++) on生成垃圾物体();
+    }
 
-        // 3. 随机报错弹窗
-        setInterval(() => {
-            const 报错框 = document.createElement("div");
-            const 错误文案集 = [
-                "KERNEL PANIC! (カーネルパニック!)",
-                "STACK OVERFLOW! (スタックオーバーフロー!)",
-                "404 BRIDGE NOT FOUND (橋が見つかりません!)",
-                "COMP 3340 ERROR (COMP 3340 エラー!)",
-                "SYSTEM OVERLOAD! (システムオーバーロード!)",
-                "UWIN GLITCH! (UWIN グリッチ!)"
-            ];
-            报错框.style.cssText = "position:fixed; background:black; color:red; padding:10px; border:2px solid red; z-index:9999; font-family:monospace; font-size:18px; transform:rotate(" + (Math.random() * 20 - 10) + "deg);";
-            报错框.innerText = 错误文案集[Math.floor(Math.random() * 错误文案集.length)];
-            报错框.style.left = Math.random() * 80 + "vw";
-            报错框.style.top = Math.random() * 80 + "vh";
-            document.body.appendChild(报错框);
-            setTimeout(() => 报错框.remove(), 1000);
-        }, 1200);
+    function on创建弹幕(文本内容) {
+        const 弹幕元素 = document.createElement('div');
+        弹幕元素.className = 'danmaku-item';
+        弹幕元素.innerText = 文本内容;
 
-        // 4. 标题切换
-        setInterval(() => {
-            const 标题数组 = [
-                "FATAL ERROR - COMP3340",
-                "UWIN GLOBAL CRASH",
-                "你好 世 - SYSTEM FAILURE",
-                "CRITICAL WARNING - BRIDGE IS GONE"
-            ];
-            document.title = 标题数组[Math.floor(Math.random() * 标题数组.length)];
-        }, 2000);
+        const 颜色池 = ['#00FF00', '#FFFF00', '#FF00FF', '#00FFFF', '#FFFFFF', '#FF4500'];
+        弹幕元素.style.color = 颜色池[Math.floor(Math.random() * 颜色池.length)];
+        
+        弹幕元素.style.top = Math.random() * 85 + '%';
+        弹幕元素.style.left = '100%';
+        弹幕图层.appendChild(弹幕元素);
 
-        // 5. 鼠标粒子效果
-        document.addEventListener('mousemove', function (事件句柄) {
-            for (let i = 0; i < 3; i++) {
-                const 粒子元素 = document.createElement('div');
-                粒子元素.className = '微粒';
-                document.body.appendChild(粒子元素);
-
-                const 粒子大小 = Math.random() * 10 + 5;
-                粒子元素.style.width = 粒子大小 + 'px';
-                粒子元素.style.height = 粒子大小 + 'px';
-                粒子元素.style.left = 事件句柄.clientX + Math.random() * 20 - 10 + 'px';
-                粒子元素.style.top = 事件句柄.clientY + Math.random() * 20 - 10 + 'px';
-
-                const 颜色集 = ['#FFD700', '#FF4500', '#FF69B4', '#00FFFF'];
-                粒子元素.style.backgroundColor = 颜色集[Math.floor(Math.random() * 颜色集.length)];
-            }
+        const 持续时间 = 4000 + Math.random() * 6000;
+        const 动画 = 弹幕元素.animate([
+            { transform: 'translateX(0)' },
+            { transform: `translateX(calc(-100vw - 120%))` }
+        ], {
+            duration: 持续时间,
+            easing: 'linear'
         });
-    </script>
 
+        动画.onfinish = () => 弹幕元素.remove();
+    }
+
+    弹幕输入框.addEventListener('keypress', (事件) => { if(事件.key === 'Enter') on发送弹幕(); });
+
+    /* ================= 原始脚本 (ORIGINAL SCRIPTS) ================= */
+    function on随机化渐变() {
+        const 所有文本 = document.querySelectorAll('.uwin-gradient-text');
+        所有文本.forEach(元素 => {
+            const 颜色数组 = [];
+            for (let i = 0; i < 5; i++) {
+                const 红 = Math.floor(Math.random() * 255);
+                const 绿 = Math.floor(Math.random() * 255);
+                const 蓝 = Math.floor(Math.random() * 100);
+                颜色数组.push(`rgb(${红},${绿},${蓝})`);
+            }
+            元素.style.background = `linear-gradient(${Math.random() * 360}deg, ${颜色数组.join(', ')})`;
+            元素.style.webkitBackgroundClip = 'text';
+        });
+    }
+    setInterval(on随机化渐变, 500);
+
+    const 垃圾路径 = [
+        'https://www.uwindsor.ca/registrar/sites/all/themes/uwindsor_bootstrap/images/uwindsor_logo.svg',
+        'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg',
+        'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Ontario.svg',
+        'https://uwaterloo.ca/profiles/uw_base_profile/modules/custom/uw_wcms_ohana/dist/images/uwaterloo-logo.svg'
+    ];
+
+    function on生成垃圾() {
+        const 图片 = document.createElement("img");
+        图片.src = 垃圾路径[Math.floor(Math.random() * 垃圾路径.length)];
+        图片.className = "trash-img";
+        document.body.appendChild(图片);
+        
+        let 横坐标 = Math.random() * window.innerWidth;
+        let 纵坐标 = Math.random() * window.innerHeight;
+        let 横向速度 = (Math.random() - 0.5) * 14;
+        let 纵向速度 = (Math.random() - 0.5) * 14;
+
+        function on移动() {
+            横坐标 += 横向速度; 
+            纵坐标 += 纵向速度;
+            
+            if (横坐标 < 0 || 横坐标 > window.innerWidth - 130) 横向速度 *= -1;
+            if (纵坐标 < 0 || 纵坐标 > window.innerHeight - 130) 纵向速度 *= -1;
+            
+            图片.style.left = 横坐标 + "px";
+            图片.style.top = 纵坐标 + "px";
+            图片.style.transform = `rotate(${横坐标 % 360}deg)`;
+            requestAnimationFrame(on移动);
+        }
+        on移动();
+    }
+    for (let i = 0; i < 10; i++) on生成垃圾();
+
+    setInterval(() => {
+        const 报错框 = document.createElement("div");
+        const 错误信息 = ["KERNEL PANIC!", "STACK OVERFLOW!", "404 BRIDGE NOT FOUND", "COMP 3340 ERROR"];
+        报错框.style.cssText = "position:fixed; background:black; color:red; padding:10px; border:2px solid red; z-index:9999; font-family:monospace; transform:rotate(" + (Math.random() * 20 - 10) + "deg);";
+        报错框.innerText = 错误信息[Math.floor(Math.random() * 错误信息.length)];
+        报错框.style.left = Math.random() * 80 + "vw";
+        报错框.style.top = Math.random() * 80 + "vh";
+        document.body.appendChild(报错框);
+        setTimeout(() => 报错框.remove(), 1000);
+    }, 1200);
+
+    document.addEventListener('mousemove', function (鼠标事件) {
+        for (let i = 0; i < 3; i++) {
+            const 粒子 = document.createElement('div');
+            粒子.className = 'particle';
+            document.body.appendChild(粒子);
+            const 大小 = Math.random() * 10 + 5;
+            粒子.style.width = 大小 + 'px';
+            粒子.style.height = 大小 + 'px';
+            粒子.style.left = 鼠标事件.clientX + Math.random() * 20 - 10 + 'px';
+            粒子.style.top = 鼠标事件.clientY + Math.random() * 20 - 10 + 'px';
+            const 粒子颜色 = ['#FFD700', '#FF4500', '#FF69B4', '#00FFFF'];
+            粒子.style.backgroundColor = 粒子颜色[Math.floor(Math.random() * 粒子颜色.length)];
+        }
+    });
+</script>
 </body>
 
 </html>
